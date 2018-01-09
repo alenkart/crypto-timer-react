@@ -7,16 +7,25 @@ import CurrenciesList from './../CryptocurrenciesList';
 
 class App extends Component {
 
+  static storageKeys = {
+    pair : 'pair'
+  };
+
   constructor() {
     
     super();
+    
+    const selectedCryptoCurrency = localStorage.getItem(
+      App.storageKeys.pair
+    );
 
     this.counter = 0;
-    
+
     this.state = {
       cryptocurrencies: [],
       inProgress: false,
-      selectedCryptoCurrency: 'BTC:USD',
+      selectedCryptoCurrencyPrice: 0,
+      selectedCryptoCurrency: selectedCryptoCurrency || 'BTC:USD',
       redraw : false,
       chartData : {
         labels: [],
@@ -57,7 +66,11 @@ class App extends Component {
           this.counter++;
           chartData.labels.push(this.counter);
     
-          this.setState( { chartData, redraw : false } );
+          this.setState({ 
+            chartData, 
+            redraw : false, 
+            selectedCryptoCurrencyPrice: last 
+          });
       }
 
     }
@@ -89,7 +102,7 @@ class App extends Component {
 
         this.setState({ 
           cryptocurrencies: jsonResponse.data,
-          inProgress: false
+          inProgress: false,
         });
 
       } catch (e) {
@@ -103,6 +116,8 @@ class App extends Component {
 
   click = ( cryptocurrency ) => {
 
+    localStorage.setItem(App.storageKeys.pair, cryptocurrency);
+
     const chartData = this.state.chartData;
     chartData.datasets[0].data = [];
     chartData.labels = [];
@@ -113,13 +128,15 @@ class App extends Component {
       chartData: chartData,
       redraw : true,
     });
+
+    this.getCurrencies();
   }
 
   render() {
     return (
       <div className="App">
         <Timer callback={this.getCurrencies.bind(this)}/>
-        <span>{this.state.selectedCryptoCurrency}</span>
+        <span>{this.state.selectedCryptoCurrency} | ${this.state.selectedCryptoCurrencyPrice}</span>
         <Line data={this.state.chartData} redraw={this.state.redraw}/>
         <CurrenciesList cryptocurrencies={this.state.cryptocurrencies} onClick={this.click}/>
       </div>
