@@ -3,14 +3,14 @@ Chrome extension to get the cryptocurrencies prices.
 
 ## Installation
   1) Install the dependencies.
-   '''
+   ```
    yarn
-   '''
+   ```
   
   2) Build the react project.
-  '''
+  ```
   yarn build
-  '''
+  ```
   
   3) Chrome.
   
