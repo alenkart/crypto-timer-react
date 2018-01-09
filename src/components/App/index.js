@@ -100,13 +100,24 @@ class App extends Component {
 
   }
 
+  click = ( cryptocurrency ) => {
+
+    const chartData = this.state.chartData;
+    chartData.datasets[0].data = [];
+
+    this.setState({
+      selectedCryptoCurrency: cryptocurrency,
+      chartData
+    });
+  }
+
   render() {
     return (
       <div className="App">
         <Timer callback={this.getCurrencies.bind(this)}/>
         <span>{this.state.selectedCryptoCurrency}</span>
         <Line data={this.state.chartData}/>
-        <CurrenciesList cryptocurrencies={this.state.cryptocurrencies}/>
+        <CurrenciesList cryptocurrencies={this.state.cryptocurrencies} onClick={this.click}/>
       </div>
     );
   }

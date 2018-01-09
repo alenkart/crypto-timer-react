@@ -1,14 +1,13 @@
 import React from 'react';
 import './style.css';
 
-function Cryptocurrency({ pair, last, low, high }) {
+function Cryptocurrency({ pair, last, low, high, onClick }) {
 
-    pair = pair.split(':');
+    const token = pair.split(':');
 
     return (
-        <div className="Cryptocurrency">
-            <span>{}</span>
-            <div className="Cryptocurrency-header">{pair[0]} : {pair[1]}</div>
+        <div className="Cryptocurrency" onClick={() => onClick(pair)}>
+            <div className="Cryptocurrency-header">{token[0]} : {token[1]}</div>
             <div className="Cryptocurrency-body">{last}</div>
             <div className="Cryptocurrency-fooder">Low : {low} | High : {high}</div>
         </div>

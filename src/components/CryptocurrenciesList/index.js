@@ -16,7 +16,7 @@ class CryptocurrenciesList extends Component {
           });
        
         return cryptocurrencies.map((currency, key) =>  {
-            return <Cryptocurrency 
+            return <Cryptocurrency onClick={this.props.onClick}
                 key={`${currency.pair}-${key}`}
                 pair={currency.pair} 
                 high={formatter.format(currency.high)}
