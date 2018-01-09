@@ -1,0 +1,26 @@
+.Cryptocurrency {
+    display: block;
+    overflow: hidden;
+    margin-bottom: 8px;
+    border-radius: 4px;
+}
+
+.Cryptocurrency-header,
+.Cryptocurrency-body,
+.Cryptocurrency-fooder {
+    color: #fff;
+    padding: 8px;
+}
+
+.Cryptocurrency-header {
+    background: #27ae60;
+}
+
+.Cryptocurrency-body {
+    background: #34495e;
+}
+
+.Cryptocurrency-fooder {
+    font-size: 0.8em;
+    background: #2c3e50;
+}

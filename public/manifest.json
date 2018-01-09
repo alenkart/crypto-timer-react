@@ -1,0 +1,17 @@
+{
+  "short_name": "crypto-timer",
+  "name": "Crypto Timer",
+  "description": "Get the cryptocurrencies prices every 5 secs",  
+  "manifest_version": 2,
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_title": "Crypto Timer"
+  },
+  "icons": { 
+    "16": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png" 
+  },
+  "version": "1.0"
+}
