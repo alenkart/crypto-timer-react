@@ -17,6 +17,7 @@ class App extends Component {
       cryptocurrencies: [],
       inProgress: false,
       selectedCryptoCurrency: 'BTC:USD',
+      redraw : false,
       chartData : {
         labels: [],
         datasets: [{
@@ -56,7 +57,7 @@ class App extends Component {
           this.counter++;
           chartData.labels.push(this.counter);
     
-          this.setState( { chartData } );
+          this.setState( { chartData, redraw : false } );
       }
 
     }
@@ -104,10 +105,13 @@ class App extends Component {
 
     const chartData = this.state.chartData;
     chartData.datasets[0].data = [];
+    chartData.labels = [];
+    this.counter = 0;
 
     this.setState({
       selectedCryptoCurrency: cryptocurrency,
-      chartData
+      chartData: chartData,
+      redraw : true,
     });
   }
 
@@ -116,7 +120,7 @@ class App extends Component {
       <div className="App">
         <Timer callback={this.getCurrencies.bind(this)}/>
         <span>{this.state.selectedCryptoCurrency}</span>
-        <Line data={this.state.chartData}/>
+        <Line data={this.state.chartData} redraw={this.state.redraw}/>
         <CurrenciesList cryptocurrencies={this.state.cryptocurrencies} onClick={this.click}/>
       </div>
     );
