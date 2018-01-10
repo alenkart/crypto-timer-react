@@ -21,3 +21,7 @@ Chrome extension to get the cryptocurrencies prices.
   6) Extensions.
   
   7) Drop the "build" folder.
+  
+  ## Build on drive
+  In case you don't have React installed here is the build hosted on Google Drive.
+  [Build](https://drive.google.com/drive/folders/1YngAtd-gqJCvuFfTIbG1v7Eb1pm0_gxa)
