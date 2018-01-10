@@ -3,7 +3,7 @@ import './style.css';
 
 import Timer from './../Timer';
 import { Line } from 'react-chartjs';
-import CurrenciesList from './../CryptocurrenciesList';
+import CryptocurrenciesList from './../CryptocurrenciesList';
 
 class App extends Component {
 
@@ -47,11 +47,13 @@ class App extends Component {
 
   addSelectedCryptoCurrencyData(cryptocurrencies) {
 
+    const prevCryptos = this.state.cryptocurrencies;
+
     for(let index in cryptocurrencies) {
       
-      const {pair, last} = cryptocurrencies[index];
+      let crypto = cryptocurrencies[index];
       
-      if(pair === this.state.selectedCryptoCurrency) {
+      if(crypto.pair === this.state.selectedCryptoCurrency) {
        
           const chartData = this.state.chartData;
 
@@ -60,7 +62,7 @@ class App extends Component {
             chartData.datasets[0].data.shift();
           } else {
             chartData.labels.pop();
-            chartData.datasets[0].data.push(+last);
+            chartData.datasets[0].data.push(+crypto.last);
           }
 
           this.counter++;
@@ -69,9 +71,12 @@ class App extends Component {
           this.setState({ 
             chartData, 
             redraw : false, 
-            selectedCryptoCurrencyPrice: last 
+            selectedCryptoCurrencyPrice: crypto.last 
           });
       }
+
+      
+      crypto.prev = prevCryptos[index] ? prevCryptos[index].last : crypto.last;
 
     }
 
@@ -138,7 +143,7 @@ class App extends Component {
         <Timer callback={this.getCurrencies.bind(this)}/>
         <span>{this.state.selectedCryptoCurrency} | ${this.state.selectedCryptoCurrencyPrice}</span>
         <Line data={this.state.chartData} redraw={this.state.redraw}/>
-        <CurrenciesList cryptocurrencies={this.state.cryptocurrencies} onClick={this.click}/>
+        <CryptocurrenciesList cryptocurrencies={this.state.cryptocurrencies} onClick={this.click}/>
       </div>
     );
   }
