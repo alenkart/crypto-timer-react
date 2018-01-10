@@ -7,33 +7,22 @@ class CryptocurrenciesList extends Component {
 
     getCryptocurrenciesList() {
 
-        const { cryptocurrencies } = this.props;
-
-        const formatter = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-            minimumFractionDigits: 2,
-          });
-       
-        return cryptocurrencies.map((currency, key) =>  {
-            return <Cryptocurrency onClick={this.props.onClick}
+        return this.props.cryptocurrencies.map((currency, key) => {
+           
+            return <Cryptocurrency
                 key={`${currency.pair}-${key}`}
-                pair={currency.pair} 
-                high={formatter.format(currency.high)}
-                last={formatter.format(currency.last)}
-                low={formatter.format(currency.low)}/>
-            } 
+                {...currency}
+                onClick={this.props.onClick} />
+        }
         );
     }
 
     render() {
-
-        return(
+        return (
             <div className="CryptocurrenciesList">{this.getCryptocurrenciesList()}</div>
         );
     }
 
 }
-
 
 export default CryptocurrenciesList;
