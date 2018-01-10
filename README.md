@@ -1,6 +1,9 @@
 # crypto-timer-react
 Chrome extension to get the cryptocurrencies prices.
 
+## Demo
+![alt text](public/demo.gif)
+
 ## Installation
   1) Install the dependencies.
    ```
