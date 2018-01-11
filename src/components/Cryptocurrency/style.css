@@ -3,8 +3,12 @@
     overflow: hidden;
     margin-bottom: 8px;
     border-radius: 4px;
-    cursor: pointer;
     border: 2px solid #778899;
+}
+
+.Cryptocurrency:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
 .Cryptocurrency-header,
@@ -39,7 +43,7 @@
     background: #2c3e50;
 }
 
-.icon {
+.Cryptocurrency .icon {
     background-image: url('./currencies.png');
     background-size: 176px 158px;
     width: 16px;
@@ -48,30 +52,53 @@
     position: absolute;
 }
 
-#BTC {
+.Cryptocurrency .up {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 8px 10px;
+}
+
+.Cryptocurrency .up span {
+    padding: 4px;
+    position: relative;
+    top: 3px;
+    display: inline-block;
+    border: solid #2c3e50;
+    border-width: 0 3px 3px 0;
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+.Cryptocurrency-body,
+.Cryptocurrency .up {
+    cursor: pointer;
+}
+
+.Cryptocurrency #BTC {
     background-position: 0 -142px;
 }
 
-#ETH {
+.Cryptocurrency #ETH {
     background-position: -128px -16px;
 }
 
-#BCH {
+.Cryptocurrency #BCH {
     background-position: -32px -142px;
 }
 
-#BTG {
+.Cryptocurrency #BTG {
     background-position: -16px -142px;
 }
 
-#DASH {
+.Cryptocurrency #DASH {
     background-position: -128px -112px;
 }
 
-#XRP {
+.Cryptocurrency #XRP {
     background-position: -80px 0;
 }
 
-#ZEC {
+.Cryptocurrency #ZEC {
     background-position: -16px 0;
 }

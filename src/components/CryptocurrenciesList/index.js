@@ -7,17 +7,18 @@ class CryptocurrenciesList extends Component {
 
     getCryptocurrenciesList() {
 
-        return this.props.cryptocurrencies.map((currency, key) => {
+        return this.props.cryptocurrencies.map((currency, index) => {
            
             return <Cryptocurrency
-                key={`${currency.pair}-${key}`}
+                key={`${currency.pair}-${index}`}
                 {...currency}
-                onClick={this.props.onClick} />
-        }
-        );
+                onClick={this.props.onClick}
+                index={index}/>
+        });
     }
 
     render() {
+
         return (
             <div className="CryptocurrenciesList">{this.getCryptocurrenciesList()}</div>
         );

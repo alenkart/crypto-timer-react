@@ -8,7 +8,8 @@ import CryptocurrenciesList from './../CryptocurrenciesList';
 class App extends Component {
 
   static storageKeys = {
-    pair : 'pair'
+    pair : 'pair',
+    order : 'order'
   };
 
   constructor() {
@@ -27,16 +28,7 @@ class App extends Component {
       selectedCryptoCurrencyPrice: 0,
       selectedCryptoCurrency: selectedCryptoCurrency || 'BTC:USD',
       redraw : false,
-      chartData : {
-        labels: [],
-        datasets: [{
-            fillColor : "rgba(151,187,205,0.5)",
-            strokeColor : "rgba(151,187,205,1)",
-            pointColor : "rgba(151,187,205,1)",
-            pointStrokeColor : "#fff",
-            data: [],
-        }],
-      },
+      chartData : this.getChartData(),
     };
 
   }
@@ -44,6 +36,17 @@ class App extends Component {
   componentDidMount() {
     this.getCurrencies();
   }
+
+  getChartData = () => ( {
+    labels: [],
+    datasets: [{
+        fillColor : "rgba(151,187,205,0.5)",
+        strokeColor : "rgba(151,187,205,1)",
+        pointColor : "rgba(151,187,205,1)",
+        pointStrokeColor : "#fff",
+        data: [],
+    }],
+  });
 
   addSelectedCryptoCurrencyData(cryptocurrencies) {
 
@@ -74,7 +77,6 @@ class App extends Component {
             selectedCryptoCurrencyPrice: crypto.last 
           });
       }
-
       
       crypto.prev = prevCryptos[index] ? prevCryptos[index].last : crypto.last;
 
@@ -105,8 +107,10 @@ class App extends Component {
 
         this.addSelectedCryptoCurrencyData(jsonResponse.data);
 
+        const cryptocurrencies = this.getOrder(jsonResponse.data) || jsonResponse.data;
+
         this.setState({ 
-          cryptocurrencies: jsonResponse.data,
+          cryptocurrencies,
           inProgress: false,
         });
 
@@ -119,7 +123,33 @@ class App extends Component {
 
   }
 
-  click = ( cryptocurrency ) => {
+  getOrder(data) {
+
+    let order = localStorage.getItem(App.storageKeys.order);
+
+    if(!order) {
+      return;
+    }
+
+    const cryptocurrencies = [];
+
+    order = order.split(',');
+
+    order.forEach((pair, index) => {
+
+      const cryptocurrency = data.find(currency => currency.pair === pair);
+
+      if(cryptocurrency) {
+        cryptocurrencies[index] = cryptocurrency;          
+      }
+      
+    });
+
+    return cryptocurrencies;
+
+  }
+
+  updateChart(cryptocurrency) {
 
     localStorage.setItem(App.storageKeys.pair, cryptocurrency);
 
@@ -135,6 +165,37 @@ class App extends Component {
     });
 
     this.getCurrencies();
+
+  }
+
+  updateOrder(pair) {
+    
+    const { cryptocurrencies } = this.state;
+    let index = cryptocurrencies.findIndex(currency => currency.pair === pair);
+    const cryptocurrency = cryptocurrencies[index];
+
+    if(index === 0) {
+      return;
+    }
+
+    cryptocurrencies.splice(index, 1);
+
+    index--;
+    cryptocurrencies.splice(index, 0, cryptocurrency);
+    this.setState({ cryptocurrencies });
+
+    const newOrder = cryptocurrencies.map(currency => currency.pair);
+    localStorage.setItem(App.storageKeys.order, newOrder.join(','));
+  }
+
+  click = ( cryptocurrency, type ) => {
+
+    if(type === 'chart') {
+      this.updateChart(cryptocurrency);
+    } else {
+      this.updateOrder(cryptocurrency);
+    }
+
   }
 
   render() {
@@ -143,7 +204,9 @@ class App extends Component {
         <Timer callback={this.getCurrencies.bind(this)}/>
         <span>{this.state.selectedCryptoCurrency} | ${this.state.selectedCryptoCurrencyPrice}</span>
         <Line data={this.state.chartData} redraw={this.state.redraw}/>
-        <CryptocurrenciesList cryptocurrencies={this.state.cryptocurrencies} onClick={this.click}/>
+        <CryptocurrenciesList 
+          cryptocurrencies={this.state.cryptocurrencies} 
+          onClick={this.click}/>
       </div>
     );
   }
