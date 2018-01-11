@@ -8,6 +8,9 @@ function Cryptocurrency({ index, pair, low, high, last, prev, onClick}) {
 
     let bodyClasses = ['Cryptocurrency-body'];
 
+    if(pair === "XRP:USD")
+    console.log(pair, "prev", prev, "last", last);
+
     if (+last !== +prev) {
         //console.log("pair: " + pair + " - last: " + last + " - prev: " + prev)
         bodyClasses.push((+last > +prev ? 'green' : 'red'));

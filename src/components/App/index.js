@@ -78,7 +78,9 @@ class App extends Component {
           });
       }
       
-      crypto.prev = prevCryptos[index] ? prevCryptos[index].last : crypto.last;
+      const prevCrypto = prevCryptos.find(prevCrypto => prevCrypto.pair === crypto.pair);
+
+      crypto.prev = prevCrypto ? prevCrypto.last : crypto.last;
 
     }
 
