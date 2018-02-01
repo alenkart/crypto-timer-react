@@ -2,7 +2,7 @@
 Chrome extension to get the cryptocurrencies prices.
 
 ## Demo
-[Online Demo](https://alenkart.github.io/crypto-timer-react/)
+[Online Demo](https://alenkart.github.io/crypto-timer-react/)  
 ![alt text](public/demo.gif)
 
 ## Build on drive
