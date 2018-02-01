@@ -127,15 +127,21 @@ class App extends Component {
 
   getOrder(data) {
 
+    const cryptocurrencies = [];
+    
     let order = localStorage.getItem(App.storageKeys.order);
 
     if(!order) {
       return;
     }
 
-    const cryptocurrencies = [];
-
     order = order.split(',');
+
+    const newCryptos = data
+    .filter(currency => !order.includes(currency.pair))
+    .map(currency => currency.pair);
+
+    order = order.concat(newCryptos);
 
     order.forEach((pair, index) => {
 
@@ -148,7 +154,6 @@ class App extends Component {
     });
 
     return cryptocurrencies;
-
   }
 
   updateChart(cryptocurrency) {
