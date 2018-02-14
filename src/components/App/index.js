@@ -209,7 +209,7 @@ class App extends Component {
     return (
       <div className="App">
         <Timer callback={this.getCurrencies.bind(this)}/>
-        <span>{this.state.selectedCryptoCurrency} | ${this.state.selectedCryptoCurrencyPrice}</span>
+        <span className="App-title">{this.state.selectedCryptoCurrency} | ${this.state.selectedCryptoCurrencyPrice}</span>
         <Line data={this.state.chartData} redraw={this.state.redraw}/>
         <CryptocurrenciesList 
           cryptocurrencies={this.state.cryptocurrencies} 
